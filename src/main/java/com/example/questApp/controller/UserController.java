@@ -2,6 +2,7 @@ package com.example.questApp.controller;
 
 import com.example.questApp.entity.User;
 import com.example.questApp.repository.UserRepository;
+import com.example.questApp.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,52 +11,40 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/deneme")
 public class UserController {
-    private UserRepository userRepository;
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    private UserService userService;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping
     public List<User> getAllUser()
     {
-        return userRepository.findAll();
+        return userService.getAllUsers();
     }
 
     @PostMapping("/users")
     public User createUser(@RequestBody User newUser)
     {
-           return userRepository.save(newUser);
+           return userService.saveUser(newUser);
     }
 
     @GetMapping("/{userId}")
     public User getUserById(@PathVariable Long userId)
     {
-       return userRepository.findById(userId).orElse(null);
+       return userService.findUserById(userId);
     }
 
 
     @PutMapping("/{userId}")
     public User updateUser(@PathVariable Long userId, @RequestBody User newUser)
     {
-        Optional<User> user= Optional.ofNullable(userRepository.findById(userId).orElse(null));
-        if (user.isPresent())
-        {
-            User foundUser=user.get();
-            foundUser.setUsername(newUser.getUsername());
-            foundUser.setPassword(newUser.getPassword());
-            userRepository.save(foundUser);
-            return foundUser;
-
-        }
-        else
-        {
-            return null;
-        }
+        return userService.UpdateUser(userId,newUser);
     }
     @DeleteMapping("/{userId})")
     public void deleteUser(@PathVariable Long userId)
+
     {
-        userRepository.deleteById(userId);
+        userService.deleteUserById(userId);
     }
 
 }

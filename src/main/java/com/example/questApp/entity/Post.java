@@ -1,7 +1,10 @@
 package com.example.questApp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.security.PrivateKey;
 
@@ -11,7 +14,11 @@ import java.security.PrivateKey;
 public class Post {
     @Id
     private Long id;
-    private Long userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable=false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    User user;
     private String title;
     private String text;
 
