@@ -13,4 +13,5 @@ public class Like {
     private Long id;
     private Long postId;
     private Long userId;
+
 }
