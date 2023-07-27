@@ -1,4 +1,4 @@
-package requests;
+package com.example.questApp.requests;
 
 import lombok.Data;
 

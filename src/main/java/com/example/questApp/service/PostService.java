@@ -3,9 +3,9 @@ package com.example.questApp.service;
 import com.example.questApp.entity.Post;
 import com.example.questApp.entity.User;
 import com.example.questApp.repository.PostRepository;
-import requests.PostCreateRequest;
+import com.example.questApp.requests.PostCreateRequest;
 import org.springframework.stereotype.Service;
-import requests.PostUpdateRequest;
+import com.example.questApp.requests.PostUpdateRequest;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,12 +1,11 @@
-package requests;
+package com.example.questApp.requests;
 
 import lombok.Data;
 
 @Data
-public class CommentCreateRequest
+public class LikeCreateRequest
 {
     Long id;
     Long postId;
     Long userId;
-    String text;
 }

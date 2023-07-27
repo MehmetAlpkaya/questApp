@@ -1,4 +1,4 @@
-package requests;
+package com.example.questApp.requests;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Lob;

@@ -1,10 +1,10 @@
 package com.example.questApp.controller;
 
 import com.example.questApp.entity.Post;
-import requests.PostCreateRequest;
+import com.example.questApp.requests.PostCreateRequest;
 import com.example.questApp.service.PostService;
 import org.springframework.web.bind.annotation.*;
-import requests.PostUpdateRequest;
+import com.example.questApp.requests.PostUpdateRequest;
 
 import java.util.List;
 import java.util.Optional;
