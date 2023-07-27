@@ -9,10 +9,11 @@ import org.hibernate.annotations.OnDeleteAction;
 import java.security.PrivateKey;
 
 @Entity
-@Table(name = "Post")
+@Table(name = "post")
 @Data
 public class Post {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable=false)
@@ -20,6 +21,8 @@ public class Post {
     @JsonIgnore
     User user;
     private String title;
+    @Lob
+    @Column(columnDefinition="text")
     private String text;
 
 

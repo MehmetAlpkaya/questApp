@@ -3,8 +3,9 @@ package com.example.questApp.service;
 import com.example.questApp.entity.Post;
 import com.example.questApp.entity.User;
 import com.example.questApp.repository.PostRepository;
-import com.example.questApp.response.PostCreateRequest;
+import requests.PostCreateRequest;
 import org.springframework.stereotype.Service;
+import requests.PostUpdateRequest;
 
 import java.util.List;
 import java.util.Optional;
@@ -48,5 +49,22 @@ public class PostService {
         toSave.setTitle(newPostRequest.getTitle());
         toSave.setUser(user);
         return postRepository.save(toSave);
+    }
+    public void deletePost(Long postId)
+    {
+        postRepository.deleteById(postId);
+    }
+    public Post updateOnePostById(Long postId, PostUpdateRequest updatePost) {
+
+            Optional<Post> post = postRepository.findById(postId);
+            if(post.isPresent()) {
+                Post toUpdate = post.get();
+                toUpdate.setText(updatePost.getText());
+                toUpdate.setTitle(updatePost.getTitle());
+                postRepository.save(toUpdate);
+                return toUpdate;
+            }
+            return null;
+
     }
 }

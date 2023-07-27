@@ -1,15 +1,16 @@
 package com.example.questApp.controller;
 
 import com.example.questApp.entity.Post;
-import com.example.questApp.response.PostCreateRequest;
+import requests.PostCreateRequest;
 import com.example.questApp.service.PostService;
 import org.springframework.web.bind.annotation.*;
+import requests.PostUpdateRequest;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("posts")
+@RequestMapping("/posts")
 public class PostController
 {
     private PostService postService;
@@ -30,12 +31,20 @@ public class PostController
         return postService.getPostById(postId);
     }
 
-    @PostMapping()
+    @PostMapping
     public Post createPost(@RequestBody PostCreateRequest newPost)
     {
         return postService.createOnePost(newPost);
     }
 
+    @PutMapping("/{postId}")
+    public Post updateOnePost(@PathVariable Long postId, @RequestBody PostUpdateRequest updatePost) {
+        return postService.updateOnePostById(postId, updatePost);
+    }
 
-
+    @DeleteMapping("/{postId}")
+    public void deletePost(@PathVariable Long postId)
+    {
+        postService.deletePost(postId);
+    }
 }
