@@ -1,35 +1,57 @@
 package com.example.questApp.service;
 
+import com.example.questApp.entity.Like;
 import com.example.questApp.entity.Post;
 import com.example.questApp.entity.User;
 import com.example.questApp.repository.PostRepository;
 import com.example.questApp.requests.PostCreateRequest;
+import com.example.questApp.response.LikeResponse;
+import com.example.questApp.response.PostResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import com.example.questApp.requests.PostUpdateRequest;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PostService {
 
     private PostRepository postRepository;
+    private LikeService likeService;
     private UserService userService;
 
-    public PostService(PostRepository postRepository, UserService userService) {
+    public PostService(PostRepository postRepository,  UserService userService) {
         this.postRepository = postRepository;
+
         this.userService=userService;
     }
 
-
-    public List<Post> getAllPost(Optional<Long> userId)
+    @Lazy
+    @Autowired
+    public void setLikeService(LikeService likeService)
     {
+        this.likeService=likeService;
+    }
+
+
+    public List<PostResponse> getAllPost(Optional<Long> userId)
+    {
+        List<Post> list;
         if (userId.isPresent())
         {
-            return postRepository.findByUserId(userId.get());
+            list= postRepository.findByUserId(userId.get());
         }
-        return postRepository.findAll();
+        else {
+            list= postRepository.findAll();}
+
+        return  list.stream().map(p -> { // getting likes for per post and when creating postResponse it setting likes into the response
+            List<LikeResponse> likes =likeService.getAllLike(null,Optional.of(p.getId())); // To show the number of likes in the client.
+            return  new PostResponse(p, likes);}).collect(Collectors.toList());
     }
+
 
     public Post getPostById(Long postId)
     {
