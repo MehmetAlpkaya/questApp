@@ -24,7 +24,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter // Frontend de
 
     @Autowired
     UserDetailsServiceImpl userDetailsService;
-    @Override // request geldiğinde bu request authorize olmuş mu diye kontrol eder.Değilse unauthorize olarak geri çevirecek
+    @Override // Upon receiving a request, it checks whether this request has been authorized. If not, it will reject it as unauthorized.
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try{
             String jwtToken = extractJwtFromRequest(request);
@@ -34,13 +34,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter // Frontend de
                 if(user != null) {
                     UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
                     auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                    SecurityContextHolder.getContext().setAuthentication(auth);
+                    SecurityContextHolder.getContext().setAuthentication(auth); // The Security Context contains information about an authenticated user. Through the use of the SecurityContextHolder, we can access this user information throughout our entire application. When an unauthenticated user is encountered, an Authentication Exception is thrown.
                 }
             }
         } catch(Exception e) {
             return;
         }
-        filterChain.doFilter(request, response);
+        filterChain.doFilter(request, response); //The doFilter method of the Filter is called by the container each time a request/response pair is passed through the chain due to a client request for a resource at the end of the chain.
     }
     private String extractJwtFromRequest(HttpServletRequest request) {
         String bearer = request.getHeader("Authorization");
