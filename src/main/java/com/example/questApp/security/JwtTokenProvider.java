@@ -12,7 +12,7 @@ public class JwtTokenProvider
 {
     @Value("${questapp.app.secret}")
     private String APP_SECRET;
-    @Value("${qustapp.expires.in}")
+    @Value("${questapp.expires.in}")
     private long EXPIRES_IN;
 
     public String generateJwtToken(Authentication auth) {

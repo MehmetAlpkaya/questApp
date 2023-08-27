@@ -16,7 +16,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-@Component
+
 public class JwtAuthenticationFilter extends OncePerRequestFilter // Frontend den backend'e request geldiğinde birdenf azla default filtreleme gerçekleşir bizde bu filtrelemelere ek olarak jwt filter control ekliyoruz
 {
     @Autowired
