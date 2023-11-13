@@ -1,4 +1,4 @@
-- Java 17
+- Java 11
 - Spring Boot
 - Spring MVC
 - Spring Data
